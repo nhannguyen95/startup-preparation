@@ -12,4 +12,5 @@ What I learned:
 - Redux-Thunk:
   - Middleware of Redux, allows Action Creators to return functions (because these functions are delayed to execute until they are dispatched - they are called "thunks"). If Redux receives an action, it sends that action to reducers. If Redux receives a function, it executes that function.
 - React-Router-Dom
+- Django-Rest-Auth:  library provides a set of REST API endpoints for registration, authentication (including social media authentication), password reset, retrieve and update user details.
 - Authentication and Authorization with Django Rest Framework and React
