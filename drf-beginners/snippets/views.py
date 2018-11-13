@@ -6,11 +6,14 @@ from .models import Snippet
 from .serializers import SnippetSerializer, UserSerializer
 
 
-class SnippetList(generics.ListAPIView):
+class SnippetList(generics.ListCreateAPIView):
   """Provide a get method handle for querying a collection of model instances."""
   queryset = Snippet.objects.all()
   serializer_class = SnippetSerializer
 
+  def perform_create(self, serializer):
+    serializer.save(owner=self.request.user)
+    
 
 class SnippetDetail(generics.RetrieveAPIView):
   """Provide a get method handle for querying a single model instance."""
