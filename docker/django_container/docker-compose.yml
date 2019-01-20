@@ -1,0 +1,38 @@
+version: '3'
+
+volumes:
+  local_postgres_data:  # Top `volumes` define named volume, managed by Docker,
+                        # used to persist data, accessible to only Docker-processes.
+                        # Define volumes here to reuse volumes across multiple services.
+
+services:
+  django:
+    build:
+      context: .
+    image: nhannguyent/django_container  # If both build and image appear,
+                                         # build image as in `build` and tag it with `image`.
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: django_container
+      USE_DOCKER: 'yes'
+      IPYTHONDIR: /app/.ipython
+      REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: postgres://root:1234@postgres:5432/django_container
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/root/django_app  # Mount type: bind (bind a file or directory on host machine to container)
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:10.6
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: django_container
+    ports:
+      - "5432:5432"
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data  # Mount type: volume (bind a volume to container)
