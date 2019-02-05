@@ -1,4 +1,4 @@
-Cluster
+**Cluster**
 
 Kubernetes cluster contains master and nodes. 
 
@@ -8,15 +8,19 @@ Nodes and end users communicate with Master via Kubernetes API (kubectl)
 
 ---
 
-Pod
+**Pod**
 
 Containers in a Pod can share resources: volumes, an IP address (each pod in a cluster has a unique IP address), port space and run on the same node. Replicas of pods can span on multiple nodes.
 
 In case of a Node failure, identical Pods are scheduled on other available Nodes in the cluster.
 
+Pods' networking model: each Pod initially has its own cluster-private-IP address. This means:
+- Containers within a Pod can all reach each other’s ports on localhost.
+- All pods in a cluster can see each other without NAT (no need to know the IP of the Cluster the Pod is deployed on).
+
 ---
  
-Node
+**Node**
 
 A node can have multiple Pods. The Master handles scheduling pods across Nodes.
 
@@ -24,9 +28,11 @@ Each node runs kubelet to communicate with Master and container runtime like Doc
 
 ---
 
+**Service**
+
 Pod's IP is not exposed outside without a Service.
 
-Services match a set of Pods using labels and selectors.
+Services match *a set of Pods* using labels and selectors.
 
 Different types of services:
 - Cluster IP: Exposes the Service on an internal IP in the cluster. This type makes the Service only reachable from within the cluster.
@@ -54,3 +60,9 @@ spec:  # default service type is ClusterIP
                       # by default it takes the same value as port
     
 ```
+
+---
+
+**References**:
+
+- [Networking with Kubernetes](https://www.youtube.com/watch?v=WwQ62OyCNz4)
