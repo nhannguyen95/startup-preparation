@@ -30,7 +30,7 @@ Each node runs kubelet to communicate with Master and container runtime like Doc
 
 **Service**
 
-If a node dies, the pods inside that node die with it. The deployment will create new ones with different IPs. Service solves this problem, it is an abstraction which defines a logical set of Pods. When created, each Service is assigned a unique IP address (also called Cluster-IP - the one shown when we describe the service). This address is tied to the lifespan of the Service, and will not change while the Service is alive.
+If a node dies, the pods inside that node die with it. The deployment will create new ones with different IPs. Service solves this problem, it is an abstraction which defines a logical set of Pods. When created, each Service is assigned a unique IP address (also called Cluster-IP - the one shown when we describe the service). This address is tied to the lifespan of the Service, and will not change while the Service is alive. The traffic will be load-balanced to the target Pods.
 
 Pod's IP is not exposed outside without a Service.
 
@@ -38,8 +38,14 @@ Services match *a set of Pods* using labels and selectors.
 
 Different types of services:
 - Cluster IP: Exposes the Service on an internal IP in the cluster. This type makes the Service only reachable from within the cluster.
-- NodePort - Exposes the Service on the same port of each selected Node in the cluster using NAT. Makes a Service accessible from outside the cluster using <NodeIP>:<NodePort>. Superset of ClusterIP.
+ 
+- NodePort - Exposes the Service on the same port of each selected Node in the cluster using NAT. Makes a Service accessible from outside the cluster using `<NodeIP>:<NodePort>`. Superset of ClusterIP.
+  
+  The K8s Master will allocate a same port (the `nodePort`, default range in 30000-32767) on every Node (regardless of whether the Node contains the target Pod or not, the traffic will be load-balanced), and each Node will proxy that port into the Service. 
+
 - LoadBalancer - Creates an external load balancer in the current cloud (if supported) and assigns a fixed, external IP to the Service. Superset of NodePort.
+
+  Cloud providers will provision a load balancer for the Service. This means the traffic will travel through the `port` that maps to the pods, not through `nodePort`.
 
 Services will monitor continuously the running Pods using Endpoints, to ensure the traffic is sent only to available Pods (when they are scaled). Each Endpoint is a pair of Pod's IP address and the port that is mapped to the Service (you can enquire this using `kubectl describe svc <svc_name>`.
 
@@ -95,4 +101,3 @@ spec:  # default service type is ClusterIP
 - [Networking with Kubernetes](https://www.youtube.com/watch?v=WwQ62OyCNz4)
 - [K8s API docs](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13)
 - [Which Kubernetes apiVersion Should I Use?](https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html)
-
