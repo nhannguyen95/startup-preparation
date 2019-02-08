@@ -30,6 +30,8 @@ Each node runs kubelet to communicate with Master and container runtime like Doc
 
 **Service**
 
+If a node dies, the pods inside that node die with it. The deployment will create new ones with different IPs. Service solves this problem, it is an abstraction which defines a logical set of Pods. When created, each Service is assigned a unique IP address (also called Cluster-IP - the one shown when we describe the service). This address is tied to the lifespan of the Service, and will not change while the Service is alive.
+
 Pod's IP is not exposed outside without a Service.
 
 Services match *a set of Pods* using labels and selectors.
@@ -39,30 +41,58 @@ Different types of services:
 - NodePort - Exposes the Service on the same port of each selected Node in the cluster using NAT. Makes a Service accessible from outside the cluster using <NodeIP>:<NodePort>. Superset of ClusterIP.
 - LoadBalancer - Creates an external load balancer in the current cloud (if supported) and assigns a fixed, external IP to the Service. Superset of NodePort.
 
-Services will monitor continuously the running Pods using endpoints, to ensure the traffic is sent only to available Pods (when they are scaled)
+Services will monitor continuously the running Pods using Endpoints, to ensure the traffic is sent only to available Pods (when they are scaled). Each Endpoint is a pair of Pod's IP address and the port that is mapped to the Service (you can enquire this using `kubectl describe svc <svc_name>`.
 
 ---
 
-Defining a service:
+Defining a Deployment:
 
 ```yaml
-kind: Service
-apiVersion: v1
+apiVersion: apps/v1  # When Kubernetes has a release that updates what is available for you to use—changes something in its API—a new apiVersion is created.
+kind: Deployment
 metadata:
-  name: my-service  # this service is assigned an IP address
+ name: my-nginx  # Deployment's label
+spec:
+ selector:  # how the Deployment finds which Pods to manage
+  matchLabels:
+   run: my-nginx
+ replicas: 2
+ template:
+  metadata:
+   labels:
+    run: my-nginx  # pods' label
+  spec:
+   containers:
+   - name: my-nginx
+     image: nginx
+     ports:
+     - containerPort: 80  # Expose and map container's port 80 to pod's port 80
+ 
+```
+
+Defining a Service:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-nginx  # this service is assigned an IP address
+  labels:
+    run: my-nginx
 spec:  # default service type is ClusterIP
   selector:
-    app: MyApp  # labels of the target set of Pods
+    run: my-nginx  # labels of the target set of Pods
   ports:
   - protocol: TCP  # TCP is default
-    port: 80  # port of the service
-    targetPort: 9376  # exposed port the the set of Pods,
-                      # by default it takes the same value as port
-    
+    port: 8080  # port of the service
+    targetPort: 80  # exposed port of the set of Pods,
+                    # by default it takes the same value as port
 ```
 
 ---
 
 **References**:
-
 - [Networking with Kubernetes](https://www.youtube.com/watch?v=WwQ62OyCNz4)
+- [K8s API docs](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13)
+- [Which Kubernetes apiVersion Should I Use?](https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html)
+
