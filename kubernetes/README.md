@@ -59,6 +59,16 @@ A simple case is to create one Job object in order to reliably run one Pod to co
 
 ---
 
+**CronJob**
+
+A Cron Job creates Jobs on a time-based schedule. Cron jobs are useful for creating periodic and recurring tasks, like running backups or sending emails.
+
+There are certain circumstances where two jobs might be created, or no job might be created. Therefore, jobs should be idempotent.
+
+The Cronjob is only responsible for creating Jobs that match its schedule, and the Job in turn is responsible for the management of the Pods it represents.
+
+---
+
 Defining a Deployment:
 
 ```yaml
@@ -137,6 +147,20 @@ spec:
                          # by spin up new pods.
  backoffLimit: 4  # specify the number of retries before considering a Job as failed
 
+```
+
+Defining a CronJob:
+
+```yaml
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+ name: <cronjob_name>
+spec:
+ schedule: "*/1 * * * *"  # https://www.freebsd.org/cgi/man.cgi?crontab%285%29
+ jobTemplate:
+ ...
+ concurrencyPolicy: Replace  # If it is time for a new job run and the previous job run hasn’t finished yet, the cron job replaces the currently running job run with a new job run
 ```
 
 ---
