@@ -4,7 +4,19 @@ Kubernetes cluster contains master and nodes.
 
 Master is responsible for managing the cluster.
 
+The nodes are firewalled from the Internet.
+
 Nodes and end users communicate with Master via Kubernetes API (kubectl)
+
+---
+
+**Init Containers**
+
+A Pod can have 1 or more Init Containers, which are run before the app Containers are started.
+
+Init Containers always run to completion, and each one *must complete successfully before the next one is started*.
+
+If an Init Container fails for a Pod, Kubernetes restarts the Pod repeatedly until the Init Container succeeds.
 
 ---
 
@@ -69,6 +81,12 @@ The Cronjob is only responsible for creating Jobs that match its schedule, and t
 
 ---
 
+**PersistentVolumeClaim**: Pods use PersistentVolumeClaims to request physical storage.
+
+After you create the PersistentVolumeClaim, the Kubernetes control plane looks for a PersistentVolume that satisfies the claim’s requirements and binds the claim to the volume. In a production cluster like GCE, the PersistentVolume is set up as a GCE persistent disk (or an Amazon Elastic Block Store volume for Amazon EKS).
+
+---
+
 Defining a Deployment:
 
 ```yaml
@@ -77,6 +95,10 @@ kind: Deployment
 metadata:
  name: my-nginx  # Deployment's label
 spec:
+ volumes:  # the pod's configuration specifies a pvc but not a pv because from the pod's point of view: the claim is a volume
+ - name: pv-storage
+   persistentVolumeClaim:
+    claimName: pv-claim
  selector:  # how the Deployment finds which Pods to manage
   matchLabels:
    run: my-nginx
@@ -86,6 +108,9 @@ spec:
    labels:
     run: my-nginx  # pods' label
   spec:
+   initContainers:
+   - ...
+   - ...
    containers:
    - name: my-nginx
      image: nginx
@@ -104,7 +129,9 @@ spec:
          key: env_key_abc
      ports:
      - containerPort: 80  # Expose and map container's port 80 to pod's port 80
- 
+     volumeMounts:
+     - mountPath: <some_path_in_the_container>
+       name: pv-storage
 ```
 
 Defining a Service:
@@ -161,6 +188,21 @@ spec:
  jobTemplate:
  ...
  concurrencyPolicy: Replace  # If it is time for a new job run and the previous job run hasn’t finished yet, the cron job replaces the currently running job run with a new job run
+```
+
+Defining a PersistentVolumeClaim:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: pv-claim
+spec:
+ accessMode:
+  - ReadWriteOnce  # Provice read/write access for at least one Node
+ resources:
+  requests:
+   storage: 3Gi
 ```
 
 ---
