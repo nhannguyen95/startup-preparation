@@ -71,6 +71,19 @@ spec:
    containers:
    - name: my-nginx
      image: nginx
+     imagePullPolicy: Always  # the image is pulled every time the pod is started
+     resources:
+      requests:
+       cpu: 100m  # (milicores) = 0.1 core = 0.1 K8s CPU = 0.1 GCP vCPU
+       memory: 64Mi  # (mebi) = 64 * 1024^2 (bytes)
+     env:
+     - name: ENV_NAME
+       value: ENV_VALUE
+     - name: ENV_NAME_SEC
+       valueFrom:
+        secretKeyRef:
+         name: env_name_abc
+         key: env_key_abc
      ports:
      - containerPort: 80  # Expose and map container's port 80 to pod's port 80
  
