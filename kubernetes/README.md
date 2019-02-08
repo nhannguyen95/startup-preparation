@@ -51,6 +51,14 @@ Services will monitor continuously the running Pods using Endpoints, to ensure t
 
 ---
 
+**Job**
+
+A job creates one or more pods and ensures that a specified number of them successfully terminate. As pods successfully complete, the job tracks the successful completions. When a specified number of successful completions is reached, the job itself is complete. Deleting a Job will cleanup the pods it created.
+
+A simple case is to create one Job object in order to reliably run one Pod to completion. The Job object will start a new Pod if the first pod fails or is deleted (for example due to a node hardware failure or a node reboot).
+
+---
+
 Defining a Deployment:
 
 ```yaml
@@ -98,7 +106,8 @@ metadata:
   name: my-nginx  # this service is assigned an IP address
   labels:
     run: my-nginx
-spec:  # default service type is ClusterIP
+spec:
+  type: ClusterIP  # default service type is ClusterIP
   selector:
     run: my-nginx  # labels of the target set of Pods
   ports:
@@ -106,6 +115,28 @@ spec:  # default service type is ClusterIP
     port: 8080  # port of the service
     targetPort: 80  # exposed port of the set of Pods,
                     # by default it takes the same value as port
+```
+
+Defining a Job:
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+ name: <job_name>
+spec:
+ template:
+  spec:
+   containers:
+   - name: <container_name>
+     image: <container_image>
+     command: <command_when_container_starts>
+   restartPolicy: Never  # This applies for all containers in the Pod.
+                         # For a Job, only 2 values are accepted: Never and OnFailure.
+                         # If restartPolicty=Never, the Job will retry (in case it fails)
+                         # by spin up new pods.
+ backoffLimit: 4  # specify the number of retries before considering a Job as failed
+
 ```
 
 ---
