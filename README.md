@@ -1,1 +1,5 @@
-# web-dev
+- Unix/Linux commands.
+- REST
+- Git
+- Regex
+- Python
