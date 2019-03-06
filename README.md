@@ -21,7 +21,7 @@ Read articles:
 - [Why HATEOAS is useless and what that means for REST](https://medium.com/@andreasreiser94/why-hateoas-is-useless-and-what-that-means-for-rest-a65194471bc8?fbclid=IwAR0StTDqWbaZvltEUgx0ynLM6B0X_03PlCGhZGwX8rYe3u_xyp57nNlUYRs)
   
   HATEOAS:
-  - from root URI, user can navigate entire interface dynamically.
+  - from root URI, user can navigate entire interface dynamically (info goes with controls).
   - evolvability by creating a uniform interface.
     
   Problems:
