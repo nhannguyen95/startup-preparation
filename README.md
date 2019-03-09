@@ -26,3 +26,11 @@ Read articles:
   >  - API is versioned by numberring (`/v1/`) => loss evolvability
   
 - [Introduction to CSS layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Introduction)
+
+- [UUIDs and ULIDs](https://www.honeybadger.io/blog/uuids-and-ulids/)
+  > UUIDs: 123e4567-e89b-12d3-a456-426655440000
+  >   - rely either on timestamp or randomness
+  > ULIDs: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+  >   - use both timestamp and randomness
+  >   - prettier than UUIDs
+  >   - lexicographically sortable
