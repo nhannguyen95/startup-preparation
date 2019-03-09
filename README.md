@@ -26,6 +26,7 @@ Read articles:
   >  - API is versioned by numberring (`/v1/`) => loss evolvability
   
 - [Introduction to CSS layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Introduction)
+  > normal flow, display, positioning, float, flex box, grid, table
 
 - [UUIDs and ULIDs](https://www.honeybadger.io/blog/uuids-and-ulids/)
   > UUIDs: 123e4567-e89b-12d3-a456-426655440000
@@ -34,3 +35,6 @@ Read articles:
   >   - use both timestamp and randomness
   >   - prettier than UUIDs
   >   - lexicographically sortable
+  
+ - [Normal Flow](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Normal_Flow)
+ 
