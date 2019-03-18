@@ -42,3 +42,9 @@ Read articles:
  
  - [Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)
  
+ - [Floats](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Floats)
+ 
+ - [Positioning](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning)
+ 
+ - [Fundamental Layout Comprehension](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Supporting_Older_Browsers)
+ 
