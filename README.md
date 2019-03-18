@@ -38,7 +38,7 @@ Read articles:
   
  - [Normal Flow](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Normal_Flow)
  
- - [React Main Concepts Doc](https://reactjs.org/docs/hello-world.html): next is 8
+ - [React Main Concepts Doc](https://reactjs.org/docs/hello-world.html): next is 9
  
  - [Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)
  
