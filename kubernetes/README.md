@@ -61,6 +61,8 @@ Different types of services:
 
 Services will monitor continuously the running Pods using Endpoints, to ensure the traffic is sent only to available Pods (when they are scaled). Each Endpoint is a pair of Pod's IP address and the port that is mapped to the Service (you can enquire this using `kubectl describe svc <svc_name>`.
 
+Read more: Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what? [4].
+
 ---
 
 **Job**
@@ -207,7 +209,24 @@ spec:
 
 ---
 
+**Accessing Kubernetes API**
+
+- Usually we use `kubectl` to communicate with Kubernetes API Server, `kubectl` handles authenticating to the apiserver.
+
+- If you want to directly access to the Kubernetes API Server with an http client (curl or wget) _from localhost_, one of the way is to [run `kubectl` in proxy mode](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/#using-kubectl-proxy) - `kubectl proxy`. Basically it reads the cluster configuration in `.kube/config` and uses credentials from there. Then it creates communication channel from local machine to API-Server interface, so, you can use local port to send requests to Kubernetes cluster API without necessity to specify credentials for each request.
+
+---
+
+**Accessing services running on the cluster**
+
+- [Ways to connect](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/#ways-to-connect).
+
+- One of the way is to use [_apiserver proxy_](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/#manually-constructing-apiserver-proxy-urls).
+
+---
+
 **References**:
 - [Networking with Kubernetes](https://www.youtube.com/watch?v=WwQ62OyCNz4)
 - [K8s API docs](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13)
 - [Which Kubernetes apiVersion Should I Use?](https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html)
+- [[4] Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what?](https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0)
