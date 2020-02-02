@@ -1,3 +1,7 @@
+Middlwares add extra functionalities to the Redux dispatch function.
+
+---
+
 action --- (dispatched) --> middlewares ---> reducers.
 
 ---
