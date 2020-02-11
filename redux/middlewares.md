@@ -23,3 +23,6 @@ const middleware = store => next => action => {
 }
 ```
 
+---
+
+It is okay to use Symbols, Promises, or other non-serializable values in an action if the action is intended for use by middleware. Actions only need to be serializable by the time they actually reach the store and are passed to the reducers.
