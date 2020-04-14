@@ -30,3 +30,5 @@ A document is a basic unit of information to be indexed, it is simply a containe
 An index can be too larged to fit in the hard disk of one node, a single node can be too slow to serve all search requests. The solution is to have your index split up to multiple **shards** in across multiple machines (nodes) in your cluster. This process is called **sharding**, each individual node contains 1 shard of an index.
 
 Setting up **replicas** of your index helps increase the availability of your cluster, every shard will have 0 or more corrresponding replica. An index in Elasticsearch have 5 shards and 1 replica by default.
+ 
+ElasticSearch assign every document in an index a **unique ID**, we can also specify that ID. Every document also has a **version** number associated with it, this version increases everytime we update the doc.
