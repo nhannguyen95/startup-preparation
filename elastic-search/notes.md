@@ -32,3 +32,5 @@ An index can be too larged to fit in the hard disk of one node, a single node ca
 Setting up **replicas** of your index helps increase the availability of your cluster, every shard will have 0 or more corrresponding replica. An index in Elasticsearch have 5 shards and 1 replica by default.
  
 ElasticSearch assign every document in an index a **unique ID**, we can also specify that ID. Every document also has a **version** number associated with it, this version increases everytime we update the doc.
+
+Elasticsearch uses REST API to administer the cluster, perform CRUD operations, search etc.
