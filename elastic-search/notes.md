@@ -34,3 +34,5 @@ Setting up **replicas** of your index helps increase the availability of your cl
 ElasticSearch assign every document in an index a **unique ID**, we can also specify that ID. Every document also has a **version** number associated with it, this version increases everytime we update the doc.
 
 Elasticsearch uses REST API to administer the cluster, perform CRUD operations, search etc.
+
+Each document is added into an index under JSON like format, each field that presents in the JSON is indexed. The document can be retrieved/updated as a whole or partially.
