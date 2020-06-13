@@ -58,3 +58,8 @@ The Elasticsearch query server is stateless.
 
 **term search**: term should have an exact match in the inverted index.
 
+Full text queries using:
+- match: not exactly an exact match.
+- match_phrase
+- match_phrase_prefix
+
