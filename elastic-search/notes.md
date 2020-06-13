@@ -36,3 +36,25 @@ ElasticSearch assign every document in an index a **unique ID**, we can also spe
 Elasticsearch uses REST API to administer the cluster, perform CRUD operations, search etc.
 
 Each document is added into an index under JSON like format, each field that presents in the JSON is indexed. The document can be retrieved/updated as a whole or partially.
+
+The Elasticsearch Query DSL (Domain Specific Language) is the language that you use to specify what you want to search for.
+
+Searchs within Elasticsearch operate under 2 contexts and try to answer 2 different questions:
+- How well does this document match this query? => Run in the **Query Context**.
+- Does this document match this query clause? => Run in the **Filter Context**.
+
+Query Context components:
+- Document included or not?
+- Relevance score.
+- High score, more relevant.
+
+Filter Context components:
+- Document included or not?
+- No scoring.
+- Used when we want to filter unstructure data: Exact matches, range queries.
+- Queries run in filter context are faster / more performant than in query context.
+
+The Elasticsearch query server is stateless.
+
+**term search**: term should have an exact match in the inverted index.
+
