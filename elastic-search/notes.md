@@ -73,3 +73,5 @@ The core relevance algorithm that elasticsearch relies on is **TF/IDF - Term Fre
 - Field-length norm: how long is the field which was searched?: Longer field, less relevant - a term appear in a longer field is one of a larger set, so less relevant.
 
 Relevance in Elasticsearch is calculated using TF/IDF in combination with other factors.
+
+**Compound Queries** is a more complex query built out of relatively simple ones.
