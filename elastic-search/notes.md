@@ -63,3 +63,13 @@ Full text queries using:
 - match_phrase
 - match_phrase_prefix
 
+Relevance in Elasticsearch is represented by the **_score** field in every search result, and is computed as a function of the document and the search term. The query clause is directly responsible for a relavant score of a particular document.
+
+Elastic search also allows **fuzzy search**, that look at how similar the search term is to the word present in the document (opposite to exact match).
+
+The core relevance algorithm that elasticsearch relies on is **TF/IDF - Term Frequency/Inverse Document Frequency**:
+- Term frequency: how often does the term appear in a field of the document: more often, more relevant.
+- Inverse document frequency: how often does the term appear in the index: more often, less relevant (for example stop words as "the", "this").
+- Field-length norm: how long is the field which was searched?: Longer field, less relevant - a term appear in a longer field is one of a larger set, so less relevant.
+
+Relevance in Elasticsearch is calculated using TF/IDF in combination with other factors.
