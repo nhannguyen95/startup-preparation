@@ -75,3 +75,16 @@ The core relevance algorithm that elasticsearch relies on is **TF/IDF - Term Fre
 Relevance in Elasticsearch is calculated using TF/IDF in combination with other factors.
 
 **Compound Queries** is a more complex query built out of relatively simple ones.
+
+We can also execute analytic queries via **aggregations**, 4 types of them:
+- Metric:
+  - Aggregation over a set of documents: either all documents in a search result or documents withing a logical group.
+  - Include sum, average, count, mix, max, etc.
+- Bucketing
+  - Logically group documents based on search query.
+  - A document falls into a bucket if the criteria matches.
+  - Each bucket associated with a key.
+- Matrix
+  - Operates on multiple fields and produces a matrix result.
+- Pipeline
+  - Aggregations that work on the output of other aggregations.
