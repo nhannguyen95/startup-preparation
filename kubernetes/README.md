@@ -36,7 +36,7 @@ Pods' networking model: each Pod initially has its own cluster-private-IP addres
 
 A node can have multiple Pods. The Master handles scheduling pods across Nodes.
 
-Each node runs kubelet to communicate with Master and container runtime like Docker to pull images etc.   
+Each node runs `kubelet` to communicate with Master, `container runtime` like Docker to pull images etc and `kube-proxy`.   
 
 ---
 
